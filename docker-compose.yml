@@ -1,0 +1,53 @@
+version: '3.7'
+
+services:
+  couchbase:
+    image: couchbase:community
+    container_name: couchbase
+    ports:
+      - "8091:8091"
+      - "8092:8092"
+      - "8093:8093"
+      - "8094:8094"
+      - "11210:11210"
+    environment:
+      - COUCHBASE_ADMINISTRATOR_USERNAME="db_product"
+      - COUCHBASE_ADMINISTRATOR_PASSWORD="sessiondb_product"
+      - COUCHBASE_BUCKET="db_product"
+      - COUCHBASE_BUCKET_RAMSIZE=256
+      - COUCHBASE_INDEX_STORAGE_SETTING=default
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8091/pools"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    volumes:
+      - couchbase_data:/opt/couchbase/var 
+    networks:
+      - grpc     
+  
+  app:
+    build: .
+    container_name: grpc-python-boilerplate
+    depends_on:
+      - couchbase
+    environment:
+      - DB_HOST=couchbase
+      - BUCKET=db_product
+      - COLLECTION=_default
+      - SCOPE=_default
+      - USERNAME=db_product
+      - PASSWORD=sessiondb_product
+    ports:
+      - "5001:5000"
+    volumes:
+      - .:/app
+    networks:
+      - grpc
+
+networks:
+  grpc:
+    driver: bridge
+
+volumes:
+  couchbase_data:
