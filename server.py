@@ -12,6 +12,12 @@ import google.protobuf.empty_pb2
 from google.protobuf.json_format import MessageToDict
 from google.protobuf.json_format import ParseDict
 
+import logging
+
+# Configure logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
 class ProductServicer(product_pb2_grpc.productServiceServicer):
 
     def __init__(self):
@@ -34,9 +40,10 @@ class ProductServicer(product_pb2_grpc.productServiceServicer):
         doc = MessageToDict(request)
         response = product_pb2.productId()
         try:
+            logger.info("Inserting document", doc)
             self._connection.insert(request.productId, doc)
         except Exception as e:
-            print(e)
+            logger.error("Error inserting document", e)
             response.productId = "Exception Occured , Unable to Create Product"
             return response
         response.productId = request.productId
@@ -47,7 +54,7 @@ class ProductServicer(product_pb2_grpc.productServiceServicer):
         try:
             result = self._connection.get(request.productId)
         except Exception as e:
-            print(e)
+            logger.error("Error inserting document", e)
             response.productId = "Exception Occured , Unable to Retrieve Product"
             return response
         doc = result.content_as[dict]
@@ -56,18 +63,18 @@ class ProductServicer(product_pb2_grpc.productServiceServicer):
 
     def updateProduct(self, request, context):
         doc = MessageToDict(request)
-        print(doc)
+        logger.info("Updating document", doc)
         try:
             self._connection.replace(request.productId,doc)
         except Exception as e:
-            print(e)
+            logger.error("Error inserting document", e)
         return google.protobuf.empty_pb2.Empty()
 
     def deleteProduct(self, request, context):
         try:
             self._connection.remove(request.productId)
         except Exception as e:
-            print(e)
+            logger.error("Error inserting document", e)
         return google.protobuf.empty_pb2.Empty()
 
     def getAllProducts(self, request, context):
@@ -75,7 +82,7 @@ class ProductServicer(product_pb2_grpc.productServiceServicer):
         try:
             result = self._cluster.query(query)
         except Exception as e:
-            print(e)
+            logger.error("Error inserting document", e)
             response = product_pb2.product()
             response.productId = "Exception Occured , Unable to Retrieve All Products"
             return response
@@ -88,7 +95,7 @@ def main():
     server = grpc.server(futures.ThreadPoolExecutor(max_workers=10))
     product_pb2_grpc.add_productServiceServicer_to_server(ProductServicer(), server)
     server.add_insecure_port("[::]:5000")
-    print("Starting gRPC server on port 5000...")
+    logger.info("Starting server. Listening on port 5001")
     server.start()
     server.wait_for_termination()
 
