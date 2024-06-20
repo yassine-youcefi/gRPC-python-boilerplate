@@ -21,7 +21,6 @@ This repository provides a boilerplate setup for a gRPC server implemented in Py
 
 ## Getting Started
 
-
 1. Clone the Repository
 
 ```bash
@@ -42,3 +41,36 @@ cd gRPC-python-boilerplate
   the bucket name and username of your choice and use the same names
   (bucketname , username and password) in [.env](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1) file.
 * Install [grpc](https://pypi.org/project/grpc/), [grpcio-tools](https://pypi.org/project/grpcio-tools/),[couchbase](https://pypi.org/project/couchbase/), [load_dotenv](https://pypi.org/project/python-dotenv/) packages
+
+
+---
+
+> Genarate product_pb2.py and product_pb2_grpc.py :
+>
+> ```bash
+> python3 -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. protos/product.proto
+> ```
+
+#### product_pb2.py:
+
+This file contains the classes for the message types defined in `.proto` file. It includes:
+
+* **Classes for Messages** : For each message type in `.proto` file, there will be a corresponding class in `product_pb2.py`. These classes are used to serialize and deserialize the message types to and from binary format.
+* **Serialization Methods** : Methods to serialize messages to binary format and parse messages from binary format.
+* **Descriptors** : Metadata about the message types, including fields and their types.
+
+For example, based on `product.proto`, `product_pb2.py` will include classes like `product`, `productId`, etc.
+
+#### product_pb2_grpc.py:
+
+This file contains the classes and methods for the gRPC service defined in `.proto` file. It includes:
+
+* **Stub Classes** : These are client-side classes that contain methods corresponding to the RPC methods defined in the service. You use these stubs to call the RPC methods from the client code.
+* **Servicer Classes** : These are server-side classes that you subclass to implement the RPC methods. You define the logic of your RPC methods in these subclasses.
+* **Server Registration Functions** : Functions to add your service implementations to a gRPC server.
+
+For example, based on `product.proto`, `product_pb2_grpc.py` will include:
+
+* `productServiceStub` class: For the client to call RPC methods.
+* `productServiceServicer` class: For the server to implement RPC methods.
+* `add_productServiceServicer_to_server` function: To register the service implementation with a gRPC server.
