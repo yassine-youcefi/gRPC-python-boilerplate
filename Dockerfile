@@ -14,5 +14,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 80
 EXPOSE 5000
 
-# Run server.py when the container launches
-CMD ["python3", "server.py"]
+# Run server.py when the container launches using watchdog
+CMD ["watchmedo", "auto-restart", "--recursive", "--patterns=*.py", "python3", "server.py"]
