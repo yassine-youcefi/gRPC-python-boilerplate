@@ -6,34 +6,35 @@ import "product.proto";
 package cart;
 
 
-message cartItemId {
-    string cartItemId = 1;
-}
 
 message cartItem {
-    product.product product = 1;
-    int32 quantity = 2;
+    string cartItemId = 1;
+    product.product product = 2;
+    int32 quantity = 3;
 }
-
+    
 message cart {
     string userId = 1;                 
     repeated cartItem items = 2;       
     float totalPrice = 3;
     string status = 4;                 
 }
-
+    
 message cartId {
     string cartId = 1;
 }
-
+            
 message userId {
     string userId = 1;
 }
-
-
+                
+message cartItemId {
+    string cartItemId = 1;
+}
+                
 service cartService {
-    rpc createCartItem(cartItem) returns (cartItem);
-    rpc updateCartItem(cartItem) returns (cartItem);
+    rpc createCartItem(cartItem) returns (cartItemId);
+    rpc updateCartItem(cartItem) returns (cartItemId);
     
     rpc getCartByUserId(userId) returns (cart);
     rpc createCart (cart) returns (cartId);
