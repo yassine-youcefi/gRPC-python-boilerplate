@@ -1,7 +1,6 @@
 syntax = "proto3";
 
 import "google/protobuf/empty.proto";
-import "product.proto";
 
 package cart;
 
@@ -9,36 +8,19 @@ package cart;
 
 message cartItem {
     string cartItemId = 1;
-    product.product product = 2;
+    message product {
+        string productId = 1;
+    }
+    repeated product products = 2;
     int32 quantity = 3;
-}
-    
-message cart {
-    string userId = 1;                 
-    repeated cartItem items = 2;       
-    float totalPrice = 3;
-    string status = 4;                 
-}
-    
-message cartId {
-    string cartId = 1;
-}
-            
-message userId {
-    string userId = 1;
 }
                 
 message cartItemId {
     string cartItemId = 1;
 }
-                
-service cartService {
-    rpc createCartItem(cartItem) returns (cartItemId);
-    rpc updateCartItem(cartItem) returns (cartItemId);
-    
-    rpc getCartByUserId(userId) returns (cart);
-    rpc createCart (cart) returns (cartId);
-    rpc getCart(cartId) returns (cart);
-    rpc updateCart(cart) returns (cart);
-    rpc deleteCart(cartId) returns (google.protobuf.Empty);
+ 
+
+service CartServicer {
+    rpc createCartItem (cartItem) returns (cartItemId);
+    rpc getCartItem (cartItemId) returns (cartItem);
 }
