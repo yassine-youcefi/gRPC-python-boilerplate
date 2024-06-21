@@ -42,7 +42,6 @@ cd gRPC-python-boilerplate
   (bucketname , username and password) in [.env](https://dev.to/jakewitcher/using-env-files-for-environment-variables-in-python-applications-55a1) file.
 * Install [grpc](https://pypi.org/project/grpc/), [grpcio-tools](https://pypi.org/project/grpcio-tools/),[couchbase](https://pypi.org/project/couchbase/), [load_dotenv](https://pypi.org/project/python-dotenv/) packages
 
-
 ---
 
 > Genarate product_pb2.py and product_pb2_grpc.py :
@@ -74,3 +73,46 @@ For example, based on `product.proto`, `product_pb2_grpc.py` will include:
 * `productServiceStub` class: For the client to call RPC methods.
 * `productServiceServicer` class: For the server to implement RPC methods.
 * `add_productServiceServicer_to_server` function: To register the service implementation with a gRPC server.
+
+
+
+
+## usage :
+
+URL :` localhost:5001`
+
+### **create product :** 
+
+```json
+{
+"description":"t-shirt",
+"price":1000,
+"productName":"t-shirt nike",
+"status":"active",
+"tax":10
+}
+```
+
+### create cart item :
+
+
+```json
+{
+  "products":[
+    {
+      "productId":
+      "ec630b78-19af-4969-8b39-12235e10e82b"
+    }   
+  ],
+  "quantity":2
+}
+```
+
+### get cart item :
+
+
+```json
+{
+ "cartItemId":"50ba8e1a-c043-4c29-b87a-61b894b57480"
+}
+```
