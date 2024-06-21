@@ -4,7 +4,7 @@ import grpc
 import warnings
 
 from google.protobuf import empty_pb2 as google_dot_protobuf_dot_empty__pb2
-from protos import product_pb2 as protos_dot_product__pb2
+from protos import product_pb2 as product__pb2
 
 GRPC_GENERATED_VERSION = '1.64.1'
 GRPC_VERSION = grpc.__version__
@@ -21,7 +21,7 @@ except ImportError:
 if _version_not_supported:
     warnings.warn(
         f'The grpc package installed is at version {GRPC_VERSION},'
-        + f' but the generated code in protos/product_pb2_grpc.py depends on'
+        + f' but the generated code in product_pb2_grpc.py depends on'
         + f' grpcio>={GRPC_GENERATED_VERSION}.'
         + f' Please upgrade your grpc module to grpcio>={GRPC_GENERATED_VERSION}'
         + f' or downgrade your generated code using grpcio-tools<={GRPC_VERSION}.'
@@ -42,28 +42,28 @@ class productServiceStub(object):
         """
         self.createProduct = channel.unary_unary(
                 '/product.productService/createProduct',
-                request_serializer=protos_dot_product__pb2.product.SerializeToString,
-                response_deserializer=protos_dot_product__pb2.productId.FromString,
+                request_serializer=product__pb2.product.SerializeToString,
+                response_deserializer=product__pb2.productId.FromString,
                 _registered_method=True)
         self.getProduct = channel.unary_unary(
                 '/product.productService/getProduct',
-                request_serializer=protos_dot_product__pb2.productId.SerializeToString,
-                response_deserializer=protos_dot_product__pb2.product.FromString,
+                request_serializer=product__pb2.productId.SerializeToString,
+                response_deserializer=product__pb2.product.FromString,
                 _registered_method=True)
         self.updateProduct = channel.unary_unary(
                 '/product.productService/updateProduct',
-                request_serializer=protos_dot_product__pb2.product.SerializeToString,
-                response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+                request_serializer=product__pb2.product.SerializeToString,
+                response_deserializer=product__pb2.product.FromString,
                 _registered_method=True)
         self.deleteProduct = channel.unary_unary(
                 '/product.productService/deleteProduct',
-                request_serializer=protos_dot_product__pb2.productId.SerializeToString,
+                request_serializer=product__pb2.productId.SerializeToString,
                 response_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
                 _registered_method=True)
         self.getAllProducts = channel.unary_stream(
                 '/product.productService/getAllProducts',
                 request_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-                response_deserializer=protos_dot_product__pb2.product.FromString,
+                response_deserializer=product__pb2.product.FromString,
                 _registered_method=True)
 
 
@@ -105,28 +105,28 @@ def add_productServiceServicer_to_server(servicer, server):
     rpc_method_handlers = {
             'createProduct': grpc.unary_unary_rpc_method_handler(
                     servicer.createProduct,
-                    request_deserializer=protos_dot_product__pb2.product.FromString,
-                    response_serializer=protos_dot_product__pb2.productId.SerializeToString,
+                    request_deserializer=product__pb2.product.FromString,
+                    response_serializer=product__pb2.productId.SerializeToString,
             ),
             'getProduct': grpc.unary_unary_rpc_method_handler(
                     servicer.getProduct,
-                    request_deserializer=protos_dot_product__pb2.productId.FromString,
-                    response_serializer=protos_dot_product__pb2.product.SerializeToString,
+                    request_deserializer=product__pb2.productId.FromString,
+                    response_serializer=product__pb2.product.SerializeToString,
             ),
             'updateProduct': grpc.unary_unary_rpc_method_handler(
                     servicer.updateProduct,
-                    request_deserializer=protos_dot_product__pb2.product.FromString,
-                    response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
+                    request_deserializer=product__pb2.product.FromString,
+                    response_serializer=product__pb2.product.SerializeToString,
             ),
             'deleteProduct': grpc.unary_unary_rpc_method_handler(
                     servicer.deleteProduct,
-                    request_deserializer=protos_dot_product__pb2.productId.FromString,
+                    request_deserializer=product__pb2.productId.FromString,
                     response_serializer=google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
             ),
             'getAllProducts': grpc.unary_stream_rpc_method_handler(
                     servicer.getAllProducts,
                     request_deserializer=google_dot_protobuf_dot_empty__pb2.Empty.FromString,
-                    response_serializer=protos_dot_product__pb2.product.SerializeToString,
+                    response_serializer=product__pb2.product.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -154,8 +154,8 @@ class productService(object):
             request,
             target,
             '/product.productService/createProduct',
-            protos_dot_product__pb2.product.SerializeToString,
-            protos_dot_product__pb2.productId.FromString,
+            product__pb2.product.SerializeToString,
+            product__pb2.productId.FromString,
             options,
             channel_credentials,
             insecure,
@@ -181,8 +181,8 @@ class productService(object):
             request,
             target,
             '/product.productService/getProduct',
-            protos_dot_product__pb2.productId.SerializeToString,
-            protos_dot_product__pb2.product.FromString,
+            product__pb2.productId.SerializeToString,
+            product__pb2.product.FromString,
             options,
             channel_credentials,
             insecure,
@@ -208,8 +208,8 @@ class productService(object):
             request,
             target,
             '/product.productService/updateProduct',
-            protos_dot_product__pb2.product.SerializeToString,
-            google_dot_protobuf_dot_empty__pb2.Empty.FromString,
+            product__pb2.product.SerializeToString,
+            product__pb2.product.FromString,
             options,
             channel_credentials,
             insecure,
@@ -235,7 +235,7 @@ class productService(object):
             request,
             target,
             '/product.productService/deleteProduct',
-            protos_dot_product__pb2.productId.SerializeToString,
+            product__pb2.productId.SerializeToString,
             google_dot_protobuf_dot_empty__pb2.Empty.FromString,
             options,
             channel_credentials,
@@ -263,7 +263,7 @@ class productService(object):
             target,
             '/product.productService/getAllProducts',
             google_dot_protobuf_dot_empty__pb2.Empty.SerializeToString,
-            protos_dot_product__pb2.product.FromString,
+            product__pb2.product.FromString,
             options,
             channel_credentials,
             insecure,
