@@ -20,7 +20,7 @@ message productId{
 service productService{
       rpc createProduct (product) returns (productId);
       rpc getProduct(productId) returns (product);
-      rpc updateProduct(product) returns (google.protobuf.Empty);
+      rpc updateProduct(product) returns (product);
       rpc deleteProduct(productId) returns (google.protobuf.Empty);
       rpc getAllProducts(google.protobuf.Empty) returns (stream product);
 }
